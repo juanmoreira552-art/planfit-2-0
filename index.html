@@ -1,3 +1,544 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PlanFit</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+  background:#0b0d12;
+  color:#fff;
+  min-height:100vh;
+}
+
+button{
+  border:0;
+  cursor:pointer;
+}
+
+.app{
+  max-width:520px;
+  margin:auto;
+  min-height:100vh;
+  padding-bottom:90px;
+}
+
+/* HEADER */
+header{
+  padding:22px 18px 12px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo{
+  font-size:25px;
+  font-weight:800;
+}
+
+.logo span{
+  color:#7c5cff;
+}
+
+.profile-mini{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background:#7c5cff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+/* PAGES */
+.page{
+  display:none;
+  padding:8px 18px;
+}
+
+.page.active{
+  display:block;
+}
+
+/* HOME */
+.greeting{
+  margin-top:10px;
+}
+
+.greeting p{
+  color:#8e93a1;
+  margin-bottom:5px;
+}
+
+.greeting h1{
+  font-size:28px;
+}
+
+.card{
+  background:#151821;
+  border:1px solid #242936;
+  border-radius:20px;
+  padding:18px;
+  margin-top:18px;
+}
+
+.card-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:14px;
+}
+
+.card-title h2{
+  font-size:18px;
+}
+
+.muted{
+  color:#8e93a1;
+  font-size:13px;
+}
+
+/* PROGRESS */
+.progress{
+  height:9px;
+  background:#272c38;
+  border-radius:20px;
+  overflow:hidden;
+  margin:13px 0;
+}
+
+.progress div{
+  height:100%;
+  width:0%;
+  background:#7c5cff;
+  transition:.3s;
+}
+
+/* EXERCISE */
+.exercise{
+  background:#1b1f29;
+  border-radius:14px;
+  padding:14px;
+  margin-top:10px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.check{
+  width:25px;
+  height:25px;
+  border-radius:50%;
+  border:2px solid #555d6e;
+  background:transparent;
+  color:#fff;
+  flex-shrink:0;
+}
+
+.check.done{
+  background:#7c5cff;
+  border-color:#7c5cff;
+}
+
+.exercise-info{
+  flex:1;
+}
+
+.exercise-info strong{
+  display:block;
+}
+
+.exercise-info span{
+  color:#8e93a1;
+  font-size:12px;
+}
+
+.delete{
+  background:none;
+  color:#ff6678;
+  font-size:18px;
+}
+
+/* DAYS */
+.days{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding:4px 0 10px;
+}
+
+.days::-webkit-scrollbar{
+  display:none;
+}
+
+.day{
+  min-width:58px;
+  padding:10px 5px;
+  border-radius:14px;
+  background:#171b24;
+  text-align:center;
+  cursor:pointer;
+}
+
+.day small{
+  color:#8e93a1;
+  font-size:11px;
+}
+
+.day strong{
+  display:block;
+  margin-top:4px;
+}
+
+.day.selected{
+  background:#7c5cff;
+}
+
+.day.selected small,
+.day.selected strong{
+  color:#fff;
+}
+
+/* BUTTONS */
+.primary{
+  width:100%;
+  padding:14px;
+  border-radius:13px;
+  background:#7c5cff;
+  color:white;
+  font-size:15px;
+  font-weight:bold;
+  margin-top:12px;
+}
+
+.secondary{
+  padding:12px 15px;
+  border-radius:12px;
+  background:#252a36;
+  color:white;
+  font-weight:bold;
+}
+
+/* INPUT */
+input,select{
+  width:100%;
+  padding:14px;
+  border-radius:12px;
+  border:1px solid #303644;
+  background:#11141b;
+  color:white;
+  outline:none;
+  margin-top:8px;
+}
+
+label{
+  display:block;
+  margin-top:14px;
+  font-size:13px;
+  color:#b7bbc5;
+}
+
+/* PROFILE */
+.avatar-big{
+  width:85px;
+  height:85px;
+  background:#7c5cff;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:30px;
+  font-weight:bold;
+  margin:10px auto;
+}
+
+.profile-center{
+  text-align:center;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+
+.stat{
+  background:#1b1f29;
+  padding:15px 8px;
+  border-radius:14px;
+  text-align:center;
+}
+
+.stat strong{
+  display:block;
+  font-size:21px;
+}
+
+.stat span{
+  font-size:11px;
+  color:#8e93a1;
+}
+
+/* RANKING */
+.rank{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  background:#171b24;
+  padding:14px;
+  border-radius:14px;
+  margin-top:9px;
+}
+
+.rank-position{
+  width:28px;
+  font-weight:bold;
+  color:#8e93a1;
+}
+
+.rank-avatar{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background:#7c5cff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+}
+
+.rank-info{
+  flex:1;
+}
+
+.rank-info strong{
+  display:block;
+}
+
+.rank-info span{
+  font-size:12px;
+  color:#8e93a1;
+}
+
+.points{
+  font-weight:bold;
+}
+
+/* MODAL */
+.modal-bg{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.75);
+  z-index:20;
+  align-items:flex-end;
+  justify-content:center;
+}
+
+.modal-bg.open{
+  display:flex;
+}
+
+.modal{
+  width:100%;
+  max-width:520px;
+  background:#151821;
+  border-radius:25px 25px 0 0;
+  padding:22px;
+  max-height:85vh;
+  overflow:auto;
+}
+
+.modal-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:12px;
+}
+
+.close{
+  background:none;
+  color:#aaa;
+  font-size:25px;
+}
+
+/* NAV */
+nav{
+  position:fixed;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:100%;
+  max-width:520px;
+  background:#11141b;
+  border-top:1px solid #252a34;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  padding:9px 5px;
+  z-index:10;
+}
+
+.nav-btn{
+  background:none;
+  color:#777e8d;
+  padding:7px 0;
+  font-size:11px;
+}
+
+.nav-btn span{
+  display:block;
+  font-size:20px;
+  margin-bottom:3px;
+}
+
+.nav-btn.active{
+  color:#7c5cff;
+}
+
+/* EMPTY */
+.empty{
+  text-align:center;
+  padding:25px 10px;
+  color:#8e93a1;
+}
+
+@media(min-width:700px){
+  body{
+    background:#07090d;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header>
+  <div class="logo">Plan<span>Fit</span></div>
+  <div class="profile-mini" onclick="showPage('profile')">?</div>
+</header>
+
+<!-- HOME -->
+<section id="home" class="page active">
+
+  <div class="greeting">
+    <p>Seu treino de hoje</p>
+    <h1 id="homeGreeting">Olá 👋</h1>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <h2 id="todayTitle">Treino de hoje</h2>
+      <span class="muted" id="todayCount">0 exercícios</span>
+    </div>
+
+    <div class="progress">
+      <div id="todayProgress"></div>
+    </div>
+
+    <div id="todayExercises"></div>
+
+    <button class="primary" onclick="showPage('workouts')">
+      Ver treino completo
+    </button>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <h2>Seu progresso</h2>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <strong id="statStreak">0</strong>
+        <span>dias seguidos</span>
+      </div>
+
+      <div class="stat">
+        <strong id="statWorkouts">0</strong>
+        <span>treinos</span>
+      </div>
+
+      <div class="stat">
+        <strong id="statPoints">0</strong>
+        <span>pontos</span>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+
+<!-- TREINOS -->
+<section id="workouts" class="page">
+
+  <div class="greeting">
+    <p>Organize sua semana</p>
+    <h1>Meus treinos</h1>
+  </div>
+
+  <div class="card">
+
+    <div class="days" id="days"></div>
+
+    <div class="card-title">
+      <h2 id="selectedDayTitle">Segunda-feira</h2>
+      <button class="secondary" onclick="openAddExercise()">
+        + Exercício
+      </button>
+    </div>
+
+    <div id="workoutExercises"></div>
+
+    <div id="emptyWorkout" class="empty">
+      Nenhum exercício neste dia.<br>
+      Adicione os exercícios que você quiser.
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- RANKING -->
+<section id="ranking" class="page">
+
+  <div class="greeting">
+    <p>Compita com seus amigos</p>
+    <h1>Ranking 🏆</h1>
+  </div>
+
+  <div class="card">
+
+    <div class="card-title">
+      <h2>Ranking de amigos</h2>
+      <button class="secondary" onclick="openAddFriend()">
+        + Amigo
+      </button>
+    </div>
+
+    <div id="rankingList"></div>
+
+  </div>
+
+</section>
+
+
+<!-- PERFIL -->
+<section id="profile" class="page">
+
+  <div class="g
 "use client";
 
 import { useEffect, useState } from "react";
