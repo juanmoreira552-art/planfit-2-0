@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PlanFit</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:Arial,sans-serif;
+  background:#0b1020;
+  color:#fff;
+  min-height:100vh;
+}
+header{
+  padding:22px 18px;
+  background:linear-gradient(135deg,#6c4cff,#00c6ff);
+  border-radius:0 0 25px 25px;
+}
+header h1{font-size:30px}
+header p{opacity:.9;margin-top:5px}
+main{padding:18px;max-width:700px;margin:auto}
+.card{
+  background:#151d35;
+  padding:18px;
+  border-radius:18px;
+  margin-bottom:15px;
+  border:1px solid #273252;
+}
+.card h2{margin-bottom:8px}
+button{
+  border:0;
+  padding:13px 18px;
+  border-radius:12px;
+  background:#6c4cff;
+  color:white;
+  font-weight:bold;
+  font-size:15px;
+  cursor:pointer;
+}
+button:hover{opacity:.9}
+.exercise{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:#10172b;
+  padding:14px;
+  border-radius:13px;
+  margin-top:10px;
+}
+.exercise small{color:#aab3cc}
+nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:#11182c;
+  display:flex;
+  justify-content:space-around;
+  padding:12px 5px;
+  border-top:1px solid #29324d;
+}
+nav button{
+  background:transparent;
+  padding:8px;
+  color:#aeb7d0;
+}
+nav button.active{color:#fff}
+.page{display:none;padding-bottom:80px}
+.page.active{display:block}
+.stat{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+.stat div{
+  background:#151d35;
+  padding:15px 8px;
+  text-align:center;
+  border-radius:15px;
+}
+.stat b{font-size:23px;display:block}
+.timer{
+  text-align:center;
+  font-size:55px;
+  font-weight:bold;
+  margin:25px 0;
+}
+select{
+  width:100%;
+  padding:13px;
+  border-radius:10px;
+  background:#10172b;
+  color:#fff;
+  border:1px solid #34405f;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>💪 PlanFit</h1>
+  <p>Seu treino. Seu ritmo. Sua evolução.</p>
+</header>
+
+<main>
+
+<section id="home" class="page active">
+  <div class="card">
+    <h2>🔥 Treino de hoje</h2>
+    <p>Escolha uma rotina e comece quando estiver pronto.</p>
+    <br>
+    <button onclick="showPage('workouts')">Ver treinos</button>
+  </div>
+
+  <div class="stat">
+    <div><b id="days">0</b><small>dias treinados</small></div>
+    <div><b id="completed">0</b><small>treinos</small></div>
+    <div><b>💪</b><small>foco</small></div>
+  </div>
+
+  <div class="card" style="margin-top:15px">
+    <h2>📈 Evolução</h2>
+    <p>Consistência é mais importante que pressa. Treine com boa técnica e respeite seus limites.</p>
+  </div>
+</section>
+
+<section id="workouts" class="page">
+  <div class="card">
+    <h2>🏋️ Treinos</h2>
+    <p>Escolha seu nível:</p>
+    <br>
+
+    <select id="level" onchange="loadWorkout()">
+      <option value="iniciante">Iniciante</option>
+      <option value="intermediario">Intermediário</option>
+      <option value="avancado">Avançado</option>
+    </select>
+  </div>
+
+  <div id="workoutList"></div>
+</section>
+
+<section id="timerPage" class="page">
+  <div class="card">
+    <h2>⏱️ Cronômetro</h2>
+    <div class="timer" id="timer">00:30</div>
+
+    <button onclick="startTimer()">▶ Começar</button>
+    <button onclick="resetTimer()">↻ Resetar</button>
+  </div>
+</section>
+
+<section id="progress" class="page">
+  <div class="card">
+    <h2>📊 Meu progresso</h2>
+    <br>
+    <div class="stat">
+      <div><b id="pCompleted">0</b><small>treinos</small></div>
+      <div><b id="pDays">0</b><small>dias</small></div>
+      <div><b>🏆</b><small>conquista</small></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🏆 Conquistas</h2>
+    <p>Complete seu primeiro treino para desbloquear sua primeira conquista.</p>
+  </div>
+</section>
+
+</main>
+
+<nav>
+  <button class="active" onclick="showPage('home',this)">🏠<br>Início</button>
+  <button onclick="showPage('workouts',this)">💪<br>Treinos</button>
+  <button onclick="showPage('timerPage',this)">⏱️<br>Timer</button>
+  <button onclick="showPage('progress',this)">📊<br>Progresso</button>
+</nav>
+
+<script>
+const workouts={
+ iniciante:[
+  ["Flexão inclinada","3 x 8"],
+  ["Agachamento","3 x 12"],
+  ["Prancha","3 x 20s"],
+  ["Ponte de glúteos","3 x 12"],
+  ["Polichinelo","3 x 30s"]
+ ],
+ intermediario:[
+  ["Flexão","4 x 10"],
+  ["Agachamento","4 x 15"],
+  ["Prancha","3 x 40s"],
+  ["Afundo","3 x 10 cada lado"],
+  ["Mountain climber","3 x 30s"]
+ ],
+ avancado:[
+  ["Flexão declinada","4 x 12"],
+  ["Agachamento unilateral assistido","3 x 8 cada lado"],
+  ["Prancha","4 x 45s"],
+  ["Afundo","4 x 12 cada lado"],
+  ["Burpee","4 x 10"]
+ ]
+};
+
+function showPage(id,btn){
+ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+
+ document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+ if(btn)btn.classList.add('active');
+
+ if(id==='workouts')loadWorkout();
+ updateStats();
+ window.scrollTo(0,0);
+}
+
+function loadWorkout(){
+ const level=document.getElementById('level').value;
+ const list=document.getElementById('workoutList');
+ list.innerHTML='';
+
+ workouts[level].forEach((e,i)=>{
+  list.innerHTML+=`
+   <div class="card">
+    <div class="exercise">
+     <div>
+      <strong>${e[0]}</strong><br>
+      <small>${e[1]}</small>
+     </div>
+     <button onclick="completeExercise()">✓</button>
+    </div>
+   </div>`;
+ });
+}
+
+function completeExercise(){
+ let completed=Number(localStorage.getItem('completed')||0)+1;
+ localStorage.setItem('completed',completed);
+ updateStats();
+ alert("Exercício concluído! 💪");
+}
+
+function updateStats(){
+ let c=Number(localStorage.getItem('completed')||0);
+ document.getElementById('completed').textContent=c;
+ document.getElementById('pCompleted').textContent=c;
+
+ let days=Number(localStorage.getItem('days')||0);
+ document.getElementById('days').textContent=days;
+ document.getElementById('pDays').textContent=days;
+}
+
+let time=30;
+let interval=null;
+
+function startTimer(){
+ if(interval)return;
+
+ interval=setInterval(()=>{
+  time--;
+  document.getElementById('timer').textContent=
+   "00:"+String(time).padStart(2,'0');
+
+  if(time<=0){
+   clearInterval(interval);
+   interval=null;
+   alert("Tempo encerrado! 🔥");
+  }
+ },1000);
+}
+
+function resetTimer(){
+ clearInterval(interval);
+ interval=null;
+ time=30;
+ document.getElementById('timer').textContent="00:30";
+}
+
+loadWorkout();
+updateStats();
+</script>
+
+</body>
+</html>
