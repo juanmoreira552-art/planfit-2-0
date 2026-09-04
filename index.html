@@ -6,281 +6,536 @@
 <title>PlanFit</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,Helvetica,sans-serif;
+}
+
 body{
-  font-family:Arial,sans-serif;
-  background:#0b1020;
+  background:#0b0d12;
   color:#fff;
   min-height:100vh;
 }
-header{
-  padding:22px 18px;
-  background:linear-gradient(135deg,#6c4cff,#00c6ff);
-  border-radius:0 0 25px 25px;
-}
-header h1{font-size:30px}
-header p{opacity:.9;margin-top:5px}
-main{padding:18px;max-width:700px;margin:auto}
-.card{
-  background:#151d35;
-  padding:18px;
-  border-radius:18px;
-  margin-bottom:15px;
-  border:1px solid #273252;
-}
-.card h2{margin-bottom:8px}
+
 button{
   border:0;
-  padding:13px 18px;
-  border-radius:12px;
-  background:#6c4cff;
-  color:white;
-  font-weight:bold;
-  font-size:15px;
   cursor:pointer;
 }
-button:hover{opacity:.9}
-.exercise{
+
+.app{
+  max-width:520px;
+  margin:auto;
+  min-height:100vh;
+  padding-bottom:90px;
+}
+
+/* HEADER */
+header{
+  padding:22px 18px 12px;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  background:#10172b;
-  padding:14px;
-  border-radius:13px;
+}
+
+.logo{
+  font-size:25px;
+  font-weight:800;
+}
+
+.logo span{
+  color:#7c5cff;
+}
+
+.profile-mini{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background:#7c5cff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+/* PAGES */
+.page{
+  display:none;
+  padding:8px 18px;
+}
+
+.page.active{
+  display:block;
+}
+
+/* HOME */
+.greeting{
   margin-top:10px;
 }
-.exercise small{color:#aab3cc}
-nav{
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  background:#11182c;
+
+.greeting p{
+  color:#8e93a1;
+  margin-bottom:5px;
+}
+
+.greeting h1{
+  font-size:28px;
+}
+
+.card{
+  background:#151821;
+  border:1px solid #242936;
+  border-radius:20px;
+  padding:18px;
+  margin-top:18px;
+}
+
+.card-title{
   display:flex;
-  justify-content:space-around;
-  padding:12px 5px;
-  border-top:1px solid #29324d;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:14px;
 }
-nav button{
+
+.card-title h2{
+  font-size:18px;
+}
+
+.muted{
+  color:#8e93a1;
+  font-size:13px;
+}
+
+/* PROGRESS */
+.progress{
+  height:9px;
+  background:#272c38;
+  border-radius:20px;
+  overflow:hidden;
+  margin:13px 0;
+}
+
+.progress div{
+  height:100%;
+  width:0%;
+  background:#7c5cff;
+  transition:.3s;
+}
+
+/* EXERCISE */
+.exercise{
+  background:#1b1f29;
+  border-radius:14px;
+  padding:14px;
+  margin-top:10px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.check{
+  width:25px;
+  height:25px;
+  border-radius:50%;
+  border:2px solid #555d6e;
   background:transparent;
-  padding:8px;
-  color:#aeb7d0;
+  color:#fff;
+  flex-shrink:0;
 }
-nav button.active{color:#fff}
-.page{display:none;padding-bottom:80px}
-.page.active{display:block}
-.stat{
+
+.check.done{
+  background:#7c5cff;
+  border-color:#7c5cff;
+}
+
+.exercise-info{
+  flex:1;
+}
+
+.exercise-info strong{
+  display:block;
+}
+
+.exercise-info span{
+  color:#8e93a1;
+  font-size:12px;
+}
+
+.delete{
+  background:none;
+  color:#ff6678;
+  font-size:18px;
+}
+
+/* DAYS */
+.days{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding:4px 0 10px;
+}
+
+.days::-webkit-scrollbar{
+  display:none;
+}
+
+.day{
+  min-width:58px;
+  padding:10px 5px;
+  border-radius:14px;
+  background:#171b24;
+  text-align:center;
+  cursor:pointer;
+}
+
+.day small{
+  color:#8e93a1;
+  font-size:11px;
+}
+
+.day strong{
+  display:block;
+  margin-top:4px;
+}
+
+.day.selected{
+  background:#7c5cff;
+}
+
+.day.selected small,
+.day.selected strong{
+  color:#fff;
+}
+
+/* BUTTONS */
+.primary{
+  width:100%;
+  padding:14px;
+  border-radius:13px;
+  background:#7c5cff;
+  color:white;
+  font-size:15px;
+  font-weight:bold;
+  margin-top:12px;
+}
+
+.secondary{
+  padding:12px 15px;
+  border-radius:12px;
+  background:#252a36;
+  color:white;
+  font-weight:bold;
+}
+
+/* INPUT */
+input,select{
+  width:100%;
+  padding:14px;
+  border-radius:12px;
+  border:1px solid #303644;
+  background:#11141b;
+  color:white;
+  outline:none;
+  margin-top:8px;
+}
+
+label{
+  display:block;
+  margin-top:14px;
+  font-size:13px;
+  color:#b7bbc5;
+}
+
+/* PROFILE */
+.avatar-big{
+  width:85px;
+  height:85px;
+  background:#7c5cff;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:30px;
+  font-weight:bold;
+  margin:10px auto;
+}
+
+.profile-center{
+  text-align:center;
+}
+
+.stats{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:10px;
 }
-.stat div{
-  background:#151d35;
+
+.stat{
+  background:#1b1f29;
   padding:15px 8px;
+  border-radius:14px;
   text-align:center;
-  border-radius:15px;
 }
-.stat b{font-size:23px;display:block}
-.timer{
-  text-align:center;
-  font-size:55px;
+
+.stat strong{
+  display:block;
+  font-size:21px;
+}
+
+.stat span{
+  font-size:11px;
+  color:#8e93a1;
+}
+
+/* RANKING */
+.rank{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  background:#171b24;
+  padding:14px;
+  border-radius:14px;
+  margin-top:9px;
+}
+
+.rank-position{
+  width:28px;
   font-weight:bold;
-  margin:25px 0;
+  color:#8e93a1;
 }
-select{
+
+.rank-avatar{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background:#7c5cff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+}
+
+.rank-info{
+  flex:1;
+}
+
+.rank-info strong{
+  display:block;
+}
+
+.rank-info span{
+  font-size:12px;
+  color:#8e93a1;
+}
+
+.points{
+  font-weight:bold;
+}
+
+/* MODAL */
+.modal-bg{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.75);
+  z-index:20;
+  align-items:flex-end;
+  justify-content:center;
+}
+
+.modal-bg.open{
+  display:flex;
+}
+
+.modal{
   width:100%;
-  padding:13px;
-  border-radius:10px;
-  background:#10172b;
-  color:#fff;
-  border:1px solid #34405f;
+  max-width:520px;
+  background:#151821;
+  border-radius:25px 25px 0 0;
+  padding:22px;
+  max-height:85vh;
+  overflow:auto;
+}
+
+.modal-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:12px;
+}
+
+.close{
+  background:none;
+  color:#aaa;
+  font-size:25px;
+}
+
+/* NAV */
+nav{
+  position:fixed;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:100%;
+  max-width:520px;
+  background:#11141b;
+  border-top:1px solid #252a34;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  padding:9px 5px;
+  z-index:10;
+}
+
+.nav-btn{
+  background:none;
+  color:#777e8d;
+  padding:7px 0;
+  font-size:11px;
+}
+
+.nav-btn span{
+  display:block;
+  font-size:20px;
+  margin-bottom:3px;
+}
+
+.nav-btn.active{
+  color:#7c5cff;
+}
+
+/* EMPTY */
+.empty{
+  text-align:center;
+  padding:25px 10px;
+  color:#8e93a1;
+}
+
+@media(min-width:700px){
+  body{
+    background:#07090d;
+  }
 }
 </style>
 </head>
 
 <body>
 
+<div class="app">
+
 <header>
-  <h1>💪 PlanFit</h1>
-  <p>Seu treino. Seu ritmo. Sua evolução.</p>
+  <div class="logo">Plan<span>Fit</span></div>
+  <div class="profile-mini" onclick="showPage('profile')">?</div>
 </header>
 
-<main>
-
+<!-- HOME -->
 <section id="home" class="page active">
+
+  <div class="greeting">
+    <p>Seu treino de hoje</p>
+    <h1 id="homeGreeting">Olá 👋</h1>
+  </div>
+
   <div class="card">
-    <h2>🔥 Treino de hoje</h2>
-    <p>Escolha uma rotina e comece quando estiver pronto.</p>
-    <br>
-    <button onclick="showPage('workouts')">Ver treinos</button>
+    <div class="card-title">
+      <h2 id="todayTitle">Treino de hoje</h2>
+      <span class="muted" id="todayCount">0 exercícios</span>
+    </div>
+
+    <div class="progress">
+      <div id="todayProgress"></div>
+    </div>
+
+    <div id="todayExercises"></div>
+
+    <button class="primary" onclick="showPage('workouts')">
+      Ver treino completo
+    </button>
   </div>
 
-  <div class="stat">
-    <div><b id="days">0</b><small>dias treinados</small></div>
-    <div><b id="completed">0</b><small>treinos</small></div>
-    <div><b>💪</b><small>foco</small></div>
+  <div class="card">
+    <div class="card-title">
+      <h2>Seu progresso</h2>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <strong id="statStreak">0</strong>
+        <span>dias seguidos</span>
+      </div>
+
+      <div class="stat">
+        <strong id="statWorkouts">0</strong>
+        <span>treinos</span>
+      </div>
+
+      <div class="stat">
+        <strong id="statPoints">0</strong>
+        <span>pontos</span>
+      </div>
+    </div>
   </div>
 
-  <div class="card" style="margin-top:15px">
-    <h2>📈 Evolução</h2>
-    <p>Consistência é mais importante que pressa. Treine com boa técnica e respeite seus limites.</p>
-  </div>
 </section>
 
+
+<!-- TREINOS -->
 <section id="workouts" class="page">
-  <div class="card">
-    <h2>🏋️ Treinos</h2>
-    <p>Escolha seu nível:</p>
-    <br>
 
-    <select id="level" onchange="loadWorkout()">
-      <option value="iniciante">Iniciante</option>
-      <option value="intermediario">Intermediário</option>
-      <option value="avancado">Avançado</option>
-    </select>
+  <div class="greeting">
+    <p>Organize sua semana</p>
+    <h1>Meus treinos</h1>
   </div>
 
-  <div id="workoutList"></div>
-</section>
-
-<section id="timerPage" class="page">
   <div class="card">
-    <h2>⏱️ Cronômetro</h2>
-    <div class="timer" id="timer">00:30</div>
 
-    <button onclick="startTimer()">▶ Começar</button>
-    <button onclick="resetTimer()">↻ Resetar</button>
-  </div>
-</section>
+    <div class="days" id="days"></div>
 
-<section id="progress" class="page">
-  <div class="card">
-    <h2>📊 Meu progresso</h2>
-    <br>
-    <div class="stat">
-      <div><b id="pCompleted">0</b><small>treinos</small></div>
-      <div><b id="pDays">0</b><small>dias</small></div>
-      <div><b>🏆</b><small>conquista</small></div>
+    <div class="card-title">
+      <h2 id="selectedDayTitle">Segunda-feira</h2>
+      <button class="secondary" onclick="openAddExercise()">
+        + Exercício
+      </button>
     </div>
+
+    <div id="workoutExercises"></div>
+
+    <div id="emptyWorkout" class="empty">
+      Nenhum exercício neste dia.<br>
+      Adicione os exercícios que você quiser.
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- RANKING -->
+<section id="ranking" class="page">
+
+  <div class="greeting">
+    <p>Compita com seus amigos</p>
+    <h1>Ranking 🏆</h1>
   </div>
 
   <div class="card">
-    <h2>🏆 Conquistas</h2>
-    <p>Complete seu primeiro treino para desbloquear sua primeira conquista.</p>
+
+    <div class="card-title">
+      <h2>Ranking de amigos</h2>
+      <button class="secondary" onclick="openAddFriend()">
+        + Amigo
+      </button>
+    </div>
+
+    <div id="rankingList"></div>
+
   </div>
+
 </section>
 
-</main>
 
-<nav>
-  <button class="active" onclick="showPage('home',this)">🏠<br>Início</button>
-  <button onclick="showPage('workouts',this)">💪<br>Treinos</button>
-  <button onclick="showPage('timerPage',this)">⏱️<br>Timer</button>
-  <button onclick="showPage('progress',this)">📊<br>Progresso</button>
-</nav>
+<!-- PERFIL -->
+<section id="profile" class="page">
 
-<script>
-const workouts={
- iniciante:[
-  ["Flexão inclinada","3 x 8"],
-  ["Agachamento","3 x 12"],
-  ["Prancha","3 x 20s"],
-  ["Ponte de glúteos","3 x 12"],
-  ["Polichinelo","3 x 30s"]
- ],
- intermediario:[
-  ["Flexão","4 x 10"],
-  ["Agachamento","4 x 15"],
-  ["Prancha","3 x 40s"],
-  ["Afundo","3 x 10 cada lado"],
-  ["Mountain climber","3 x 30s"]
- ],
- avancado:[
-  ["Flexão declinada","4 x 12"],
-  ["Agachamento unilateral assistido","3 x 8 cada lado"],
-  ["Prancha","4 x 45s"],
-  ["Afundo","4 x 12 cada lado"],
-  ["Burpee","4 x 10"]
- ]
-};
-
-function showPage(id,btn){
- document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
- document.getElementById(id).classList.add('active');
-
- document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
- if(btn)btn.classList.add('active');
-
- if(id==='workouts')loadWorkout();
- updateStats();
- window.scrollTo(0,0);
-}
-
-function loadWorkout(){
- const level=document.getElementById('level').value;
- const list=document.getElementById('workoutList');
- list.innerHTML='';
-
- workouts[level].forEach((e,i)=>{
-  list.innerHTML+=`
-   <div class="card">
-    <div class="exercise">
-     <div>
-      <strong>${e[0]}</strong><br>
-      <small>${e[1]}</small>
-     </div>
-     <button onclick="completeExercise()">✓</button>
-    </div>
-   </div>`;
- });
-}
-
-function completeExercise(){
- let completed=Number(localStorage.getItem('completed')||0)+1;
- localStorage.setItem('completed',completed);
- updateStats();
- alert("Exercício concluído! 💪");
-}
-
-function updateStats(){
- let c=Number(localStorage.getItem('completed')||0);
- document.getElementById('completed').textContent=c;
- document.getElementById('pCompleted').textContent=c;
-
- let days=Number(localStorage.getItem('days')||0);
- document.getElementById('days').textContent=days;
- document.getElementById('pDays').textContent=days;
-}
-
-let time=30;
-let interval=null;
-
-function startTimer(){
- if(interval)return;
-
- interval=setInterval(()=>{
-  time--;
-  document.getElementById('timer').textContent=
-   "00:"+String(time).padStart(2,'0');
-
-  if(time<=0){
-   clearInterval(interval);
-   interval=null;
-   alert("Tempo encerrado! 🔥");
-  }
- },1000);
-}
-
-function resetTimer(){
- clearInterval(interval);
- interval=null;
- time=30;
- document.getElementById('timer').textContent="00:30";
-}
-
-loadWorkout();
-updateStats();
-</script>
-
-</body>
-</html>
+  <div class="g
