@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#0b0d12">
 <title>PlanFit</title>
 
@@ -37,7 +37,6 @@ button:active{
   padding-bottom:85px;
 }
 
-/* HEADER */
 header{
   padding:20px 18px 12px;
   display:flex;
@@ -64,10 +63,8 @@ header{
   justify-content:center;
   font-weight:bold;
   cursor:pointer;
-  overflow:hidden;
 }
 
-/* PAGES */
 .page{
   display:none;
   padding:8px 18px 20px;
@@ -77,7 +74,6 @@ header{
   display:block;
 }
 
-/* TEXT */
 .greeting{
   margin-top:10px;
 }
@@ -97,7 +93,6 @@ header{
   font-size:13px;
 }
 
-/* CARD */
 .card{
   background:#151821;
   border:1px solid #242936;
@@ -118,7 +113,6 @@ header{
   font-size:18px;
 }
 
-/* STATS */
 .stats{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -142,7 +136,6 @@ header{
   color:#8e93a1;
 }
 
-/* PROGRESS */
 .progress{
   height:9px;
   background:#272c38;
@@ -158,7 +151,6 @@ header{
   transition:.3s;
 }
 
-/* DAYS */
 .days{
   display:flex;
   gap:8px;
@@ -197,7 +189,6 @@ header{
   color:#fff;
 }
 
-/* EXERCISE */
 .exercise{
   background:#1b1f29;
   border-radius:14px;
@@ -240,7 +231,7 @@ header{
   color:#8e93a1;
   font-size:12px;
   display:block;
-  margin-top:3px;
+  margin-top:4px;
 }
 
 .delete{
@@ -250,7 +241,6 @@ header{
   padding:5px;
 }
 
-/* BUTTONS */
 .primary{
   width:100%;
   padding:14px;
@@ -281,7 +271,6 @@ header{
   margin-top:10px;
 }
 
-/* INPUT */
 input,select{
   width:100%;
   padding:14px;
@@ -305,7 +294,6 @@ label{
   color:#b7bbc5;
 }
 
-/* PROFILE */
 .profile-center{
   text-align:center;
 }
@@ -323,7 +311,6 @@ label{
   margin:10px auto 15px;
 }
 
-/* RANKING */
 .rank{
   display:flex;
   align-items:center;
@@ -379,7 +366,32 @@ label{
   white-space:nowrap;
 }
 
-/* MODAL */
+.history-item{
+  background:#1b1f29;
+  border-radius:14px;
+  padding:14px;
+  margin-top:9px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.history-item strong{
+  display:block;
+}
+
+.history-item span{
+  color:#8e93a1;
+  font-size:12px;
+  display:block;
+  margin-top:4px;
+}
+
+.history-points{
+  font-weight:bold;
+  color:#7c5cff;
+}
+
 .modal-bg{
   display:none;
   position:fixed;
@@ -400,7 +412,7 @@ label{
   background:#151821;
   border-radius:25px 25px 0 0;
   padding:22px;
-  max-height:85vh;
+  max-height:88vh;
   overflow:auto;
 }
 
@@ -422,7 +434,6 @@ label{
   padding:2px 8px;
 }
 
-/* EMPTY */
 .empty{
   text-align:center;
   padding:28px 10px;
@@ -430,7 +441,6 @@ label{
   line-height:1.5;
 }
 
-/* NAV */
 nav{
   position:fixed;
   bottom:0;
@@ -463,7 +473,6 @@ nav{
   color:#7c5cff;
 }
 
-/* TOAST */
 .toast{
   position:fixed;
   left:50%;
@@ -479,6 +488,8 @@ nav{
   z-index:50;
   font-size:14px;
   box-shadow:0 8px 30px rgba(0,0,0,.4);
+  text-align:center;
+  white-space:nowrap;
 }
 
 .toast.show{
@@ -486,7 +497,6 @@ nav{
   transform:translateX(-50%) translateY(0);
 }
 
-/* RESPONSIVE */
 @media(min-width:700px){
   body{
     background:#05070b;
@@ -502,12 +512,14 @@ nav{
 <header>
   <div class="logo">Plan<span>Fit</span></div>
 
-  <button class="profile-mini" onclick="showPage('profile')" id="miniAvatar">
-    ?
-  </button>
+  <button class="profile-mini"
+    onclick="showPage('profile')"
+    id="miniAvatar">?</button>
 </header>
 
-<!-- ================= HOME ================= -->
+
+<!-- HOME -->
+
 <section id="home" class="page active">
 
   <div class="greeting">
@@ -564,7 +576,8 @@ nav{
 </section>
 
 
-<!-- ================= TREINOS ================= -->
+<!-- TREINOS -->
+
 <section id="workouts" class="page">
 
   <div class="greeting">
@@ -600,32 +613,61 @@ nav{
 </section>
 
 
-<!-- ================= RANKING ================= -->
+<!-- RANKING / HISTÓRICO -->
+
 <section id="ranking" class="page">
 
   <div class="greeting">
-    <p>Compita com seus amigos</p>
+    <p>Acompanhe sua evolução</p>
     <h1>Ranking 🏆</h1>
   </div>
 
   <div class="card">
 
     <div class="card-title">
-      <h2>Ranking de amigos</h2>
-
-      <button class="secondary" onclick="openAddFriend()">
-        + Amigo
-      </button>
+      <h2>Esta semana</h2>
+      <span class="muted" id="weekLabel"></span>
     </div>
 
-    <div id="rankingList"></div>
+    <div class="rank me">
+
+      <div class="rank-position">
+        #1
+      </div>
+
+      <div class="rank-avatar" id="rankingAvatar">
+        ?
+      </div>
+
+      <div class="rank-info">
+        <strong id="rankingName">Você</strong>
+        <span>Seu ranking semanal</span>
+      </div>
+
+      <div class="points">
+        <span id="rankingPoints">0</span> pts
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <div class="card-title">
+      <h2>Histórico</h2>
+    </div>
+
+    <div id="historyList"></div>
 
   </div>
 
 </section>
 
 
-<!-- ================= PERFIL ================= -->
+<!-- PERFIL -->
+
 <section id="profile" class="page">
 
   <div class="greeting">
@@ -708,25 +750,34 @@ nav{
 </section>
 
 
-<!-- ================= NAV ================= -->
+<!-- NAV -->
+
 <nav>
 
-  <button class="nav-btn active" data-page="home" onclick="showPage('home')">
+  <button class="nav-btn active"
+    data-page="home"
+    onclick="showPage('home')">
     <span>⌂</span>
     Início
   </button>
 
-  <button class="nav-btn" data-page="workouts" onclick="showPage('workouts')">
+  <button class="nav-btn"
+    data-page="workouts"
+    onclick="showPage('workouts')">
     <span>🏋️</span>
     Treinos
   </button>
 
-  <button class="nav-btn" data-page="ranking" onclick="showPage('ranking')">
+  <button class="nav-btn"
+    data-page="ranking"
+    onclick="showPage('ranking')">
     <span>🏆</span>
     Ranking
   </button>
 
-  <button class="nav-btn" data-page="profile" onclick="showPage('profile')">
+  <button class="nav-btn"
+    data-page="profile"
+    onclick="showPage('profile')">
     <span>👤</span>
     Perfil
   </button>
@@ -736,7 +787,8 @@ nav{
 </div>
 
 
-<!-- ================= MODAL EXERCÍCIO ================= -->
+<!-- MODAL EXERCÍCIO -->
+
 <div class="modal-bg" id="exerciseModal">
 
   <div class="modal">
@@ -745,7 +797,8 @@ nav{
 
       <h2>Adicionar exercício</h2>
 
-      <button class="close" onclick="closeModal('exerciseModal')">
+      <button class="close"
+        onclick="closeModal('exerciseModal')">
         ×
       </button>
 
@@ -762,11 +815,120 @@ nav{
       placeholder="Ex: Flexão"
     >
 
+    <label for="exerciseType">
+      Tipo
+    </label>
+
+    <select id="exerciseType"
+      onchange="changeExerciseType()">
+
+      <option value="reps">
+        Séries e repetições
+      </option>
+
+      <option value="time">
+        Tempo
+      </option>
+
+      <option value="distance">
+        Distância
+      </option>
+
+    </select>
+
+
+    <div id="repsFields">
+
+      <label for="exerciseSets">
+        Quantas séries?
+      </label>
+
+      <input
+        id="exerciseSets"
+        type="number"
+        min="1"
+        max="100"
+        value="3"
+        placeholder="Ex: 3"
+      >
+
+      <label for="exerciseReps">
+        Quantas repetições por série?
+      </label>
+
+      <input
+        id="exerciseReps"
+        type="number"
+        min="1"
+        max="10000"
+        value="10"
+        placeholder="Ex: 10"
+      >
+
+    </div>
+
+
+    <div id="timeFields" style="display:none;">
+
+      <label for="exerciseTime">
+        Quanto tempo?
+      </label>
+
+      <input
+        id="exerciseTime"
+        type="number"
+        min="1"
+        max="10000"
+        value="30"
+        placeholder="Ex: 30"
+      >
+
+      <label for="timeUnit">
+        Unidade
+      </label>
+
+      <select id="timeUnit">
+        <option value="segundos">Segundos</option>
+        <option value="minutos">Minutos</option>
+      </select>
+
+    </div>
+
+
+    <div id="distanceFields" style="display:none;">
+
+      <label for="exerciseDistance">
+        Distância
+      </label>
+
+      <input
+        id="exerciseDistance"
+        type="number"
+        min="0.1"
+        max="1000"
+        step="0.1"
+        value="1"
+        placeholder="Ex: 5"
+      >
+
+      <label for="distanceUnit">
+        Unidade
+      </label>
+
+      <select id="distanceUnit">
+        <option value="km">Quilômetros (km)</option>
+        <option value="m">Metros (m)</option>
+      </select>
+
+    </div>
+
+
     <label for="exerciseCategory">
       Categoria
     </label>
 
     <select id="exerciseCategory">
+
       <option>Peito</option>
       <option>Costas</option>
       <option>Pernas</option>
@@ -775,69 +937,14 @@ nav{
       <option>Core</option>
       <option>Cardio</option>
       <option>Mobilidade</option>
+      <option>Corrida</option>
       <option>Outro</option>
+
     </select>
 
-    <label for="exerciseReps">
-      Séries / repetições
-    </label>
-
-    <input
-      id="exerciseReps"
-      type="text"
-      maxlength="30"
-      placeholder="Ex: 3 séries"
-    >
 
     <button class="primary" onclick="addExercise()">
       Adicionar ao treino
-    </button>
-
-  </div>
-
-</div>
-
-
-<!-- ================= MODAL AMIGO ================= -->
-<div class="modal-bg" id="friendModal">
-
-  <div class="modal">
-
-    <div class="modal-header">
-
-      <h2>Adicionar amigo</h2>
-
-      <button class="close" onclick="closeModal('friendModal')">
-        ×
-      </button>
-
-    </div>
-
-    <label for="friendName">
-      Nome do amigo
-    </label>
-
-    <input
-      id="friendName"
-      type="text"
-      maxlength="25"
-      placeholder="Ex: Lucas"
-    >
-
-    <label for="friendPoints">
-      Pontos iniciais
-    </label>
-
-    <input
-      id="friendPoints"
-      type="number"
-      min="0"
-      max="999999"
-      value="0"
-    >
-
-    <button class="primary" onclick="addFriend()">
-      Adicionar amigo
     </button>
 
   </div>
@@ -849,90 +956,251 @@ nav{
 
 
 <script>
+
 /* =========================================================
    PLANFIT
-   Tudo funciona neste único arquivo.
-   Os dados são salvos no localStorage.
+   Versão pessoal
+   Tudo fica salvo no navegador.
 ========================================================= */
 
 
-/* ================= DADOS ================= */
+/* ================= DIAS ================= */
 
 const days = [
+
   {
-    short: "Seg",
-    name: "Segunda-feira"
+    short:"Seg",
+    name:"Segunda-feira"
   },
+
   {
-    short: "Ter",
-    name: "Terça-feira"
+    short:"Ter",
+    name:"Terça-feira"
   },
+
   {
-    short: "Qua",
-    name: "Quarta-feira"
+    short:"Qua",
+    name:"Quarta-feira"
   },
+
   {
-    short: "Qui",
-    name: "Quinta-feira"
+    short:"Qui",
+    name:"Quinta-feira"
   },
+
   {
-    short: "Sex",
-    name: "Sexta-feira"
+    short:"Sex",
+    name:"Sexta-feira"
   },
+
   {
-    short: "Sáb",
-    name: "Sábado"
+    short:"Sáb",
+    name:"Sábado"
   },
+
   {
-    short: "Dom",
-    name: "Domingo"
+    short:"Dom",
+    name:"Domingo"
   }
+
 ];
 
 
-/* Treinos iniciais.
-   O usuário pode alterar depois adicionando/excluindo exercícios. */
+/* ================= TREINOS PADRÃO ================= */
 
 const defaultWorkouts = [
-  [
-    {id:"seg-1",name:"Flexão",category:"Peito",reps:"3 séries"},
-    {id:"seg-2",name:"Agachamento",category:"Pernas",reps:"3 séries"},
-    {id:"seg-3",name:"Prancha",category:"Core",reps:"3 séries"}
-  ],
 
   [
-    {id:"ter-1",name:"Flexão inclinada",category:"Peito",reps:"3 séries"},
-    {id:"ter-2",name:"Ponte de glúteos",category:"Pernas",reps:"3 séries"},
-    {id:"ter-3",name:"Superman",category:"Costas",reps:"3 séries"}
+    {
+      id:"seg-1",
+      name:"Flexão",
+      category:"Peito",
+      type:"reps",
+      sets:3,
+      reps:10
+    },
+
+    {
+      id:"seg-2",
+      name:"Agachamento",
+      category:"Pernas",
+      type:"reps",
+      sets:3,
+      reps:15
+    },
+
+    {
+      id:"seg-3",
+      name:"Prancha",
+      category:"Core",
+      type:"time",
+      time:30,
+      timeUnit:"segundos"
+    }
   ],
 
-  [
-    {id:"qua-1",name:"Elevação de joelhos",category:"Core",reps:"3 séries"},
-    {id:"qua-2",name:"Mountain climber",category:"Cardio",reps:"3 séries"},
-    {id:"qua-3",name:"Agachamento",category:"Pernas",reps:"3 séries"}
-  ],
 
   [
-    {id:"qui-1",name:"Flexão",category:"Peito",reps:"3 séries"},
-    {id:"qui-2",name:"Superman",category:"Costas",reps:"3 séries"},
-    {id:"qui-3",name:"Prancha",category:"Core",reps:"3 séries"}
+    {
+      id:"ter-1",
+      name:"Flexão inclinada",
+      category:"Peito",
+      type:"reps",
+      sets:3,
+      reps:10
+    },
+
+    {
+      id:"ter-2",
+      name:"Ponte de glúteos",
+      category:"Pernas",
+      type:"reps",
+      sets:3,
+      reps:12
+    },
+
+    {
+      id:"ter-3",
+      name:"Superman",
+      category:"Costas",
+      type:"reps",
+      sets:3,
+      reps:10
+    }
   ],
 
-  [
-    {id:"sex-1",name:"Agachamento",category:"Pernas",reps:"3 séries"},
-    {id:"sex-2",name:"Flexão inclinada",category:"Peito",reps:"3 séries"},
-    {id:"sex-3",name:"Elevação de joelhos",category:"Core",reps:"3 séries"}
-  ],
 
   [
-    {id:"sab-1",name:"Ponte de glúteos",category:"Pernas",reps:"3 séries"},
-    {id:"sab-2",name:"Mountain climber",category:"Cardio",reps:"3 séries"}
+    {
+      id:"qua-1",
+      name:"Elevação de joelhos",
+      category:"Core",
+      type:"reps",
+      sets:3,
+      reps:12
+    },
+
+    {
+      id:"qua-2",
+      name:"Mountain climber",
+      category:"Cardio",
+      type:"reps",
+      sets:3,
+      reps:20
+    },
+
+    {
+      id:"qua-3",
+      name:"Agachamento",
+      category:"Pernas",
+      type:"reps",
+      sets:3,
+      reps:15
+    }
   ],
 
+
   [
-    {id:"dom-1",name:"Prancha",category:"Core",reps:"3 séries"},
-    {id:"dom-2",name:"Mobilidade",category:"Mobilidade",reps:"5 minutos"}
+    {
+      id:"qui-1",
+      name:"Flexão",
+      category:"Peito",
+      type:"reps",
+      sets:3,
+      reps:10
+    },
+
+    {
+      id:"qui-2",
+      name:"Superman",
+      category:"Costas",
+      type:"reps",
+      sets:3,
+      reps:10
+    },
+
+    {
+      id:"qui-3",
+      name:"Prancha",
+      category:"Core",
+      type:"time",
+      time:30,
+      timeUnit:"segundos"
+    }
+  ],
+
+
+  [
+    {
+      id:"sex-1",
+      name:"Agachamento",
+      category:"Pernas",
+      type:"reps",
+      sets:3,
+      reps:15
+    },
+
+    {
+      id:"sex-2",
+      name:"Flexão inclinada",
+      category:"Peito",
+      type:"reps",
+      sets:3,
+      reps:10
+    },
+
+    {
+      id:"sex-3",
+      name:"Elevação de joelhos",
+      category:"Core",
+      type:"reps",
+      sets:3,
+      reps:12
+    }
+  ],
+
+
+  [
+    {
+      id:"sab-1",
+      name:"Ponte de glúteos",
+      category:"Pernas",
+      type:"reps",
+      sets:3,
+      reps:12
+    },
+
+    {
+      id:"sab-2",
+      name:"Caminhada",
+      category:"Cardio",
+      type:"distance",
+      distance:2,
+      distanceUnit:"km"
+    }
+  ],
+
+
+  [
+    {
+      id:"dom-1",
+      name:"Prancha",
+      category:"Core",
+      type:"time",
+      time:30,
+      timeUnit:"segundos"
+    },
+
+    {
+      id:"dom-2",
+      name:"Mobilidade",
+      category:"Mobilidade",
+      type:"time",
+      time:5,
+      timeUnit:"minutos"
+    }
   ]
+
 ];
 
 
@@ -946,63 +1214,90 @@ if(selectedDay < 0){
 
 let currentPage = "home";
 
+
 let user = {
-  name: "",
-  completed: {},
-  friends: [],
-  workouts: []
+
+  name:"",
+
+  workouts:[],
+
+  completed:{},
+
+  history:[],
+
+  currentWeek:""
+
 };
 
 
-/* ================= STORAGE ================= */
+/* ================= SEMANA ================= */
 
-function loadData(){
+function getWeekId(date){
 
-  try{
+  date = date || new Date();
 
-    const saved = localStorage.getItem("planfit_data");
+  const d = new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate()
+  );
 
-    if(saved){
+  const day = d.getDay();
 
-      const parsed = JSON.parse(saved);
+  const diff =
+    day === 0
+      ? -6
+      : 1 - day;
 
-      user.name = parsed.name || "";
-      user.completed = parsed.completed || {};
-      user.friends = Array.isArray(parsed.friends)
-        ? parsed.friends
-        : [];
+  d.setDate(d.getDate() + diff);
 
-      user.workouts = Array.isArray(parsed.workouts)
-        ? parsed.workouts
-        : [];
-
-    }
-
-  }catch(error){
-
-    console.error("Erro ao carregar dados:",error);
-
-  }
-
-
-  /* Se não existirem treinos salvos, cria os iniciais */
-
-  if(
-    !Array.isArray(user.workouts) ||
-    user.workouts.length !== 7
-  ){
-
-    user.workouts = JSON.parse(
-      JSON.stringify(defaultWorkouts)
-    );
-
-    saveData();
-  }
+  return (
+    d.getFullYear() +
+    "-" +
+    String(d.getMonth()+1).padStart(2,"0") +
+    "-" +
+    String(d.getDate()).padStart(2,"0")
+  );
 
 }
 
 
-/* Salva tudo */
+function getWeekLabel(){
+
+  const id = getWeekId();
+
+  const date =
+    new Date(id + "T12:00:00");
+
+  const end =
+    new Date(date);
+
+  end.setDate(end.getDate() + 6);
+
+  const startText =
+    date.toLocaleDateString(
+      "pt-BR",
+      {
+        day:"2-digit",
+        month:"2-digit"
+      }
+    );
+
+  const endText =
+    end.toLocaleDateString(
+      "pt-BR",
+      {
+        day:"2-digit",
+        month:"2-digit"
+      }
+    );
+
+  return startText + " - " + endText;
+
+}
+
+
+/* ================= STORAGE ================= */
 
 function saveData(){
 
@@ -1015,9 +1310,154 @@ function saveData(){
 
   }catch(error){
 
-    console.error("Erro ao salvar dados:",error);
+    console.error(error);
 
   }
+
+}
+
+
+function loadData(){
+
+  try{
+
+    const saved =
+      localStorage.getItem(
+        "planfit_data"
+      );
+
+
+    if(saved){
+
+      const parsed =
+        JSON.parse(saved);
+
+
+      user.name =
+        parsed.name || "";
+
+
+      user.workouts =
+        Array.isArray(parsed.workouts)
+          ? parsed.workouts
+          : [];
+
+
+      user.completed =
+        parsed.completed || {};
+
+
+      user.history =
+        Array.isArray(parsed.history)
+          ? parsed.history
+          : [];
+
+
+      user.currentWeek =
+        parsed.currentWeek || "";
+
+    }
+
+  }catch(error){
+
+    console.error(
+      "Erro ao carregar:",
+      error
+    );
+
+  }
+
+
+  if(
+    !Array.isArray(user.workouts) ||
+    user.workouts.length !== 7
+  ){
+
+    user.workouts =
+      JSON.parse(
+        JSON.stringify(
+          defaultWorkouts
+        )
+      );
+
+  }
+
+
+  checkNewWeek();
+
+  saveData();
+
+}
+
+
+/* ================= RESET SEMANAL ================= */
+
+function checkNewWeek(){
+
+  const currentWeek =
+    getWeekId();
+
+
+  if(!user.currentWeek){
+
+    user.currentWeek =
+      currentWeek;
+
+    return;
+
+  }
+
+
+  if(user.currentWeek === currentWeek){
+
+    return;
+
+  }
+
+
+  /* Guarda a semana anterior */
+
+  const oldPoints =
+    calculatePoints();
+
+
+  const oldExercises =
+    Object.keys(
+      user.completed
+    ).length;
+
+
+  if(oldExercises > 0){
+
+    user.history.unshift({
+
+      week:user.currentWeek,
+
+      points:oldPoints,
+
+      exercises:oldExercises
+
+    });
+
+  }
+
+
+  /* Mantém somente 12 semanas */
+
+  if(user.history.length > 12){
+
+    user.history =
+      user.history.slice(0,12);
+
+  }
+
+
+  /* Nova semana */
+
+  user.completed = {};
+
+  user.currentWeek =
+    currentWeek;
 
 }
 
@@ -1026,16 +1466,20 @@ function saveData(){
 
 function showPage(page){
 
-  const pages = document.querySelectorAll(".page");
+  document
+    .querySelectorAll(".page")
+    .forEach(function(section){
 
-  pages.forEach(function(section){
+      section.classList.remove(
+        "active"
+      );
 
-    section.classList.remove("active");
-
-  });
+    });
 
 
-  const selected = document.getElementById(page);
+  const selected =
+    document.getElementById(page);
+
 
   if(selected){
 
@@ -1044,19 +1488,26 @@ function showPage(page){
   }
 
 
-  const navButtons = document.querySelectorAll(".nav-btn");
+  document
+    .querySelectorAll(".nav-btn")
+    .forEach(function(button){
 
-  navButtons.forEach(function(button){
+      button.classList.remove(
+        "active"
+      );
 
-    button.classList.remove("active");
 
-    if(button.dataset.page === page){
+      if(
+        button.dataset.page === page
+      ){
 
-      button.classList.add("active");
+        button.classList.add(
+          "active"
+        );
 
-    }
+      }
 
-  });
+    });
 
 
   currentPage = page;
@@ -1075,20 +1526,27 @@ function showPage(page){
 
 function renderDays(){
 
-  const container = document.getElementById("days");
+  const container =
+    document.getElementById("days");
+
 
   container.innerHTML = "";
 
 
   days.forEach(function(day,index){
 
-    const button = document.createElement("button");
+    const button =
+      document.createElement("button");
+
 
     button.className = "day";
 
+
     if(index === selectedDay){
 
-      button.classList.add("selected");
+      button.classList.add(
+        "selected"
+      );
 
     }
 
@@ -1099,14 +1557,16 @@ function renderDays(){
     `;
 
 
-    button.onclick = function(){
+    button.onclick =
+      function(){
 
-      selectedDay = index;
+        selectedDay = index;
 
-      renderDays();
-      renderWorkout();
+        renderDays();
 
-    };
+        renderWorkout();
+
+      };
 
 
     container.appendChild(button);
@@ -1122,7 +1582,9 @@ function getWorkout(dayIndex){
 
   if(
     !user.workouts[dayIndex] ||
-    !Array.isArray(user.workouts[dayIndex])
+    !Array.isArray(
+      user.workouts[dayIndex]
+    )
   ){
 
     user.workouts[dayIndex] = [];
@@ -1134,12 +1596,159 @@ function getWorkout(dayIndex){
 }
 
 
-/* Cria ID único */
-
 function createId(){
 
-  return Date.now().toString() +
-    Math.random().toString(36).substring(2,8);
+  return (
+    Date.now().toString() +
+    Math.random()
+      .toString(36)
+      .substring(2,8)
+  );
+
+}
+
+
+/* ================= DESCRIÇÃO ================= */
+
+function getExerciseDescription(exercise){
+
+  if(exercise.type === "reps"){
+
+    return (
+      exercise.sets +
+      " séries × " +
+      exercise.reps +
+      " repetições"
+    );
+
+  }
+
+
+  if(exercise.type === "time"){
+
+    return (
+      exercise.time +
+      " " +
+      exercise.timeUnit
+    );
+
+  }
+
+
+  if(exercise.type === "distance"){
+
+    return (
+      exercise.distance +
+      " " +
+      exercise.distanceUnit
+    );
+
+  }
+
+
+  return "";
+
+}
+
+
+/* ================= EXERCÍCIO ================= */
+
+function createExerciseElement(
+  exercise,
+  allowDelete
+){
+
+  const key =
+    selectedDay +
+    "_" +
+    exercise.id;
+
+
+  const done =
+    user.completed[key] === true;
+
+
+  const item =
+    document.createElement("div");
+
+
+  item.className = "exercise";
+
+
+  item.innerHTML = `
+
+    <button
+      class="check ${done ? "done" : ""}"
+      aria-label="Concluir exercício"
+    >
+      ${done ? "✓" : ""}
+    </button>
+
+    <div class="exercise-info">
+
+      <strong>
+        ${escapeHtml(exercise.name)}
+      </strong>
+
+      <span>
+        ${escapeHtml(exercise.category)}
+        •
+        ${escapeHtml(
+          getExerciseDescription(
+            exercise
+          )
+        )}
+      </span>
+
+    </div>
+
+    ${
+      allowDelete
+      ?
+      `
+      <button
+        class="delete"
+        aria-label="Excluir exercício"
+      >
+        🗑
+      </button>
+      `
+      :
+      ""
+    }
+
+  `;
+
+
+  item
+    .querySelector(".check")
+    .onclick =
+      function(){
+
+        toggleExercise(
+          exercise.id
+        );
+
+      };
+
+
+  if(allowDelete){
+
+    item
+      .querySelector(".delete")
+      .onclick =
+        function(){
+
+          deleteExercise(
+            exercise.id
+          );
+
+        };
+
+  }
+
+
+  return item;
 
 }
 
@@ -1149,127 +1758,96 @@ function createId(){
 function renderWorkout(){
 
   const title =
-    document.getElementById("selectedDayTitle");
+    document.getElementById(
+      "selectedDayTitle"
+    );
+
 
   const container =
-    document.getElementById("workoutExercises");
+    document.getElementById(
+      "workoutExercises"
+    );
+
 
   const empty =
-    document.getElementById("emptyWorkout");
+    document.getElementById(
+      "emptyWorkout"
+    );
+
 
   const progress =
-    document.getElementById("workoutProgress");
+    document.getElementById(
+      "workoutProgress"
+    );
 
 
-  title.textContent = days[selectedDay].name;
+  title.textContent =
+    days[selectedDay].name;
+
 
   container.innerHTML = "";
 
 
-  const workout = getWorkout(selectedDay);
+  const workout =
+    getWorkout(selectedDay);
 
 
   if(workout.length === 0){
 
-    empty.style.display = "block";
+    empty.style.display =
+      "block";
 
-    progress.style.width = "0%";
+    progress.style.width =
+      "0%";
 
     return;
 
   }
 
 
-  empty.style.display = "none";
+  empty.style.display =
+    "none";
 
 
   let completedCount = 0;
 
 
-  workout.forEach(function(exercise){
+  workout.forEach(
+    function(exercise){
 
-    const key =
-      selectedDay + "_" + exercise.id;
+      const key =
+        selectedDay +
+        "_" +
+        exercise.id;
 
-    const done =
-      user.completed[key] === true;
+
+      if(
+        user.completed[key]
+        === true
+      ){
+
+        completedCount++;
+
+      }
 
 
-    if(done){
-
-      completedCount++;
+      container.appendChild(
+        createExerciseElement(
+          exercise,
+          true
+        )
+      );
 
     }
-
-
-    const item =
-      document.createElement("div");
-
-    item.className = "exercise";
-
-
-    item.innerHTML = `
-      <button
-        class="check ${done ? "done" : ""}"
-        aria-label="Concluir exercício"
-      >
-        ${done ? "✓" : ""}
-      </button>
-
-      <div class="exercise-info">
-        <strong>${escapeHtml(exercise.name)}</strong>
-        <span>
-          ${escapeHtml(exercise.category)}
-          •
-          ${escapeHtml(exercise.reps)}
-        </span>
-      </div>
-
-      <button
-        class="delete"
-        aria-label="Excluir exercício"
-        title="Excluir exercício"
-      >
-        🗑
-      </button>
-    `;
-
-
-    const check =
-      item.querySelector(".check");
-
-
-    check.onclick = function(){
-
-      toggleExercise(exercise.id);
-
-    };
-
-
-    const deleteButton =
-      item.querySelector(".delete");
-
-
-    deleteButton.onclick = function(){
-
-      deleteExercise(exercise.id);
-
-    };
-
-
-    container.appendChild(item);
-
-  });
+  );
 
 
   const percentage =
-    workout.length === 0
-      ? 0
-      : Math.round(
-          completedCount /
-          workout.length *
-          100
-        );
+    Math.round(
+      completedCount /
+      workout.length *
+      100
+    );
 
 
   progress.style.width =
@@ -1283,20 +1861,35 @@ function renderWorkout(){
 function toggleExercise(exerciseId){
 
   const key =
-    selectedDay + "_" + exerciseId;
+    selectedDay +
+    "_" +
+    exerciseId;
 
 
   if(user.completed[key]){
 
     delete user.completed[key];
 
-    showToast("Exercício desmarcado");
+    showToast(
+      "Exercício desmarcado"
+    );
 
   }else{
 
     user.completed[key] = true;
 
-    showToast("Exercício concluído! +25 pts");
+    const points =
+      getExercisePoints(
+        selectedDay,
+        exerciseId
+      );
+
+
+    showToast(
+      "Exercício concluído! +" +
+      points +
+      " pts"
+    );
 
   }
 
@@ -1304,6 +1897,161 @@ function toggleExercise(exerciseId){
   saveData();
 
   updateAll();
+
+}
+
+
+/* ================= PONTOS ================= */
+
+function getExercisePoints(
+  dayIndex,
+  exerciseId
+){
+
+  const workout =
+    getWorkout(dayIndex);
+
+
+  const exercise =
+    workout.find(
+      function(item){
+
+        return item.id === exerciseId;
+
+      }
+    );
+
+
+  if(!exercise){
+
+    return 0;
+
+  }
+
+
+  /*
+    Pontuação simples:
+
+    Repetições:
+    10 pontos por série + 1 por repetição
+
+    Tempo:
+    1 ponto a cada 10 segundos
+
+    Distância:
+    10 pontos por km
+
+    Sempre existe um mínimo de 10 pontos.
+  */
+
+
+  if(exercise.type === "reps"){
+
+    return Math.max(
+      10,
+      (
+        Number(exercise.sets) * 10
+      ) +
+      Math.floor(
+        Number(exercise.reps)
+      )
+    );
+
+  }
+
+
+  if(exercise.type === "time"){
+
+    let seconds =
+      Number(exercise.time);
+
+
+    if(
+      exercise.timeUnit ===
+      "minutos"
+    ){
+
+      seconds *= 60;
+
+    }
+
+
+    return Math.max(
+      10,
+      Math.floor(seconds / 10)
+    );
+
+  }
+
+
+  if(exercise.type === "distance"){
+
+    let km =
+      Number(exercise.distance);
+
+
+    if(
+      exercise.distanceUnit === "m"
+    ){
+
+      km /= 1000;
+
+    }
+
+
+    return Math.max(
+      10,
+      Math.round(km * 10)
+    );
+
+  }
+
+
+  return 10;
+
+}
+
+
+function calculatePoints(){
+
+  let total = 0;
+
+
+  Object.keys(
+    user.completed
+  ).forEach(function(key){
+
+    if(
+      user.completed[key] !== true
+    ){
+
+      return;
+
+    }
+
+
+    const parts =
+      key.split("_");
+
+
+    const dayIndex =
+      Number(parts[0]);
+
+
+    const exerciseId =
+      parts.slice(1).join("_");
+
+
+    total +=
+      getExercisePoints(
+        dayIndex,
+        exerciseId
+      );
+
+  });
+
+
+  return total;
 
 }
 
@@ -1317,11 +2065,14 @@ function deleteExercise(exerciseId){
 
 
   const index =
-    workout.findIndex(function(exercise){
+    workout.findIndex(
+      function(exercise){
 
-      return exercise.id === exerciseId;
+        return exercise.id ===
+          exerciseId;
 
-    });
+      }
+    );
 
 
   if(index === -1){
@@ -1335,7 +2086,7 @@ function deleteExercise(exerciseId){
     workout[index];
 
 
-  const confirmDelete =
+  const confirmed =
     confirm(
       'Excluir "' +
       exercise.name +
@@ -1343,7 +2094,7 @@ function deleteExercise(exerciseId){
     );
 
 
-  if(!confirmDelete){
+  if(!confirmed){
 
     return;
 
@@ -1351,7 +2102,9 @@ function deleteExercise(exerciseId){
 
 
   const key =
-    selectedDay + "_" + exerciseId;
+    selectedDay +
+    "_" +
+    exercise.id;
 
 
   delete user.completed[key];
@@ -1361,34 +2114,107 @@ function deleteExercise(exerciseId){
 
   saveData();
 
-  renderWorkout();
-
   updateAll();
 
-  showToast("Exercício removido");
+  showToast(
+    "Exercício removido"
+  );
 
 }
 
 
-/* ================= ADICIONAR EXERCÍCIO ================= */
+/* ================= MODAL EXERCÍCIO ================= */
 
 function openAddExercise(){
 
-  document.getElementById("exerciseName").value = "";
-
-  document.getElementById("exerciseCategory").value = "Peito";
-
-  document.getElementById("exerciseReps").value = "3 séries";
+  document.getElementById(
+    "exerciseName"
+  ).value = "";
 
 
-  openModal("exerciseModal");
+  document.getElementById(
+    "exerciseType"
+  ).value = "reps";
 
 
-  setTimeout(function(){
+  document.getElementById(
+    "exerciseSets"
+  ).value = "3";
 
-    document.getElementById("exerciseName").focus();
 
-  },150);
+  document.getElementById(
+    "exerciseReps"
+  ).value = "10";
+
+
+  document.getElementById(
+    "exerciseTime"
+  ).value = "30";
+
+
+  document.getElementById(
+    "exerciseDistance"
+  ).value = "1";
+
+
+  document.getElementById(
+    "exerciseCategory"
+  ).value = "Peito";
+
+
+  changeExerciseType();
+
+  openModal(
+    "exerciseModal"
+  );
+
+
+  setTimeout(
+    function(){
+
+      document
+        .getElementById(
+          "exerciseName"
+        )
+        .focus();
+
+    },
+    150
+  );
+
+}
+
+
+function changeExerciseType(){
+
+  const type =
+    document.getElementById(
+      "exerciseType"
+    ).value;
+
+
+  document.getElementById(
+    "repsFields"
+  ).style.display =
+    type === "reps"
+      ? "block"
+      : "none";
+
+
+  document.getElementById(
+    "timeFields"
+  ).style.display =
+    type === "time"
+      ? "block"
+      : "none";
+
+
+  document.getElementById(
+    "distanceFields"
+  ).style.display =
+    type === "distance"
+      ? "block"
+      : "none";
 
 }
 
@@ -1396,41 +2222,37 @@ function openAddExercise(){
 function addExercise(){
 
   const name =
-    document.getElementById("exerciseName")
-      .value
-      .trim();
+    document.getElementById(
+      "exerciseName"
+    )
+    .value
+    .trim();
+
+
+  const type =
+    document.getElementById(
+      "exerciseType"
+    ).value;
 
 
   const category =
-    document.getElementById("exerciseCategory")
-      .value;
-
-
-  const reps =
-    document.getElementById("exerciseReps")
-      .value
-      .trim();
+    document.getElementById(
+      "exerciseCategory"
+    ).value;
 
 
   if(!name){
 
-    showToast("Digite o nome do exercício");
+    showToast(
+      "Digite o nome do exercício"
+    );
 
     return;
 
   }
 
 
-  if(!reps){
-
-    showToast("Digite as séries/repetições");
-
-    return;
-
-  }
-
-
-  const exercise = {
+  let exercise = {
 
     id:createId(),
 
@@ -1438,22 +2260,142 @@ function addExercise(){
 
     category:category,
 
-    reps:reps
+    type:type
 
   };
 
 
-  getWorkout(selectedDay).push(exercise);
+  if(type === "reps"){
+
+    const sets =
+      Number(
+        document.getElementById(
+          "exerciseSets"
+        ).value
+      );
+
+
+    const reps =
+      Number(
+        document.getElementById(
+          "exerciseReps"
+        ).value
+      );
+
+
+    if(
+      !sets ||
+      sets < 1 ||
+      !reps ||
+      reps < 1
+    ){
+
+      showToast(
+        "Informe séries e repetições válidas"
+      );
+
+      return;
+
+    }
+
+
+    exercise.sets = sets;
+
+    exercise.reps = reps;
+
+  }
+
+
+  if(type === "time"){
+
+    const time =
+      Number(
+        document.getElementById(
+          "exerciseTime"
+        ).value
+      );
+
+
+    const timeUnit =
+      document.getElementById(
+        "timeUnit"
+      ).value;
+
+
+    if(!time || time < 1){
+
+      showToast(
+        "Informe um tempo válido"
+      );
+
+      return;
+
+    }
+
+
+    exercise.time = time;
+
+    exercise.timeUnit =
+      timeUnit;
+
+  }
+
+
+  if(type === "distance"){
+
+    const distance =
+      Number(
+        document.getElementById(
+          "exerciseDistance"
+        ).value
+      );
+
+
+    const distanceUnit =
+      document.getElementById(
+        "distanceUnit"
+      ).value;
+
+
+    if(
+      !distance ||
+      distance <= 0
+    ){
+
+      showToast(
+        "Informe uma distância válida"
+      );
+
+      return;
+
+    }
+
+
+    exercise.distance =
+      distance;
+
+    exercise.distanceUnit =
+      distanceUnit;
+
+  }
+
+
+  getWorkout(
+    selectedDay
+  ).push(exercise);
+
 
   saveData();
 
-  closeModal("exerciseModal");
-
-  renderWorkout();
+  closeModal(
+    "exerciseModal"
+  );
 
   updateAll();
 
-  showToast("Exercício adicionado!");
+  showToast(
+    "Exercício adicionado!"
+  );
 
 }
 
@@ -1463,28 +2405,22 @@ function addExercise(){
 function renderHome(){
 
   const greeting =
-    document.getElementById("homeGreeting");
+    document.getElementById(
+      "homeGreeting"
+    );
 
 
-  if(user.name){
-
-    greeting.textContent =
-      "Olá, " + user.name + " 👋";
-
-  }else{
-
-    greeting.textContent =
-      "Olá 👋";
-
-  }
+  greeting.textContent =
+    user.name
+      ? "Olá, " + user.name + " 👋"
+      : "Olá 👋";
 
 
-  const todayTitle =
-    document.getElementById("todayTitle");
-
-
-  todayTitle.textContent =
-    "Treino de " + days[selectedDay].name;
+  document.getElementById(
+    "todayTitle"
+  ).textContent =
+    "Treino de " +
+    days[selectedDay].name;
 
 
   const workout =
@@ -1492,77 +2428,58 @@ function renderHome(){
 
 
   const todayExercises =
-    document.getElementById("todayExercises");
+    document.getElementById(
+      "todayExercises"
+    );
 
 
   todayExercises.innerHTML = "";
 
 
-  const count =
-    document.getElementById("todayCount");
-
-
-  count.textContent =
+  document.getElementById(
+    "todayCount"
+  ).textContent =
     workout.length +
-    (workout.length === 1
-      ? " exercício"
-      : " exercícios");
+    (
+      workout.length === 1
+        ? " exercício"
+        : " exercícios"
+    );
 
 
   let completedCount = 0;
 
 
-  workout.forEach(function(exercise){
+  workout.forEach(
+    function(exercise){
 
-    const key =
-      selectedDay + "_" + exercise.id;
+      const key =
+        selectedDay +
+        "_" +
+        exercise.id;
 
 
-    const done =
-      user.completed[key] === true;
+      const done =
+        user.completed[key]
+        === true;
 
 
-    if(done){
+      if(done){
 
-      completedCount++;
+        completedCount++;
+
+      }
+
+
+      todayExercises.appendChild(
+        createExerciseElement(
+          exercise,
+          false
+        )
+      );
 
     }
-
-
-    const item =
-      document.createElement("div");
-
-
-    item.className = "exercise";
-
-
-    item.innerHTML = `
-      <button class="check ${done ? "done" : ""}">
-        ${done ? "✓" : ""}
-      </button>
-
-      <div class="exercise-info">
-        <strong>${escapeHtml(exercise.name)}</strong>
-        <span>
-          ${escapeHtml(exercise.category)}
-          •
-          ${escapeHtml(exercise.reps)}
-        </span>
-      </div>
-    `;
-
-
-    item.querySelector(".check").onclick =
-      function(){
-
-        toggleExercise(exercise.id);
-
-      };
-
-
-    todayExercises.appendChild(item);
-
-  });
+  );
 
 
   const percentage =
@@ -1590,14 +2507,16 @@ function renderHome(){
 
 function getCompletedCount(){
 
-  return Object.keys(user.completed).length;
+  return Object.keys(
+    user.completed
+  ).filter(
+    function(key){
 
-}
+      return user.completed[key]
+        === true;
 
-
-function getPoints(){
-
-  return getCompletedCount() * 25;
+    }
+  ).length;
 
 }
 
@@ -1607,20 +2526,28 @@ function getWorkoutCount(){
   let count = 0;
 
 
-  for(let day = 0; day < 7; day++){
+  for(
+    let day = 0;
+    day < 7;
+    day++
+  ){
 
     const workout =
       getWorkout(day);
 
 
     const hasCompleted =
-      workout.some(function(exercise){
+      workout.some(
+        function(exercise){
 
-        return user.completed[
-          day + "_" + exercise.id
-        ] === true;
+          return user.completed[
+            day +
+            "_" +
+            exercise.id
+          ] === true;
 
-      });
+        }
+      );
 
 
     if(hasCompleted){
@@ -1637,31 +2564,38 @@ function getWorkoutCount(){
 }
 
 
-/* Calcula uma sequência simples de dias com exercícios concluídos */
+/* Dias com algum exercício concluído */
 
 function getStreak(){
 
-  const completedDates = {};
+  const completedDays = {};
 
 
-  Object.keys(user.completed).forEach(function(key){
+  Object.keys(
+    user.completed
+  ).forEach(function(key){
 
-    if(user.completed[key] !== true){
+    if(
+      user.completed[key] !== true
+    ){
 
       return;
 
     }
 
 
-    /* O ID não guarda a data, então usamos a atividade
-       como registro de progresso. Para não inventar uma
-       sequência falsa, retornamos o número de dias únicos
-       registrados nesta sessão de dados. */
+    const day =
+      key.split("_")[0];
+
+
+    completedDays[day] = true;
 
   });
 
 
-  return getWorkoutCount();
+  return Object.keys(
+    completedDays
+  ).length;
 
 }
 
@@ -1669,7 +2603,7 @@ function getStreak(){
 function renderStats(){
 
   const points =
-    getPoints();
+    calculatePoints();
 
 
   const exercises =
@@ -1682,32 +2616,38 @@ function renderStats(){
 
   document.getElementById(
     "statPoints"
-  ).textContent = points;
+  ).textContent =
+    points;
 
 
   document.getElementById(
     "statWorkouts"
-  ).textContent = workouts;
+  ).textContent =
+    workouts;
 
 
   document.getElementById(
     "statStreak"
-  ).textContent = getStreak();
+  ).textContent =
+    getStreak();
 
 
   document.getElementById(
     "profilePoints"
-  ).textContent = points;
+  ).textContent =
+    points;
 
 
   document.getElementById(
     "profileExercises"
-  ).textContent = exercises;
+  ).textContent =
+    exercises;
 
 
   document.getElementById(
     "profileWorkouts"
-  ).textContent = workouts;
+  ).textContent =
+    workouts;
 
 }
 
@@ -1717,7 +2657,9 @@ function renderStats(){
 function saveProfile(){
 
   const input =
-    document.getElementById("profileName");
+    document.getElementById(
+      "profileName"
+    );
 
 
   const name =
@@ -1726,7 +2668,9 @@ function saveProfile(){
 
   if(!name){
 
-    showToast("Digite seu nome");
+    showToast(
+      "Digite seu nome"
+    );
 
     return;
 
@@ -1741,7 +2685,9 @@ function saveProfile(){
 
   renderHome();
 
-  showToast("Perfil salvo!");
+  showToast(
+    "Perfil salvo!"
+  );
 
 }
 
@@ -1749,33 +2695,53 @@ function saveProfile(){
 function updateProfile(){
 
   const name =
-    user.name || "Seu perfil";
+    user.name ||
+    "Seu perfil";
 
 
   document.getElementById(
     "profileDisplayName"
-  ).textContent = name;
+  ).textContent =
+    name;
 
 
   document.getElementById(
     "profileName"
-  ).value = user.name;
+  ).value =
+    user.name;
 
 
   const letter =
     user.name
-      ? user.name.charAt(0).toUpperCase()
+      ? user.name
+          .charAt(0)
+          .toUpperCase()
       : "?";
 
 
   document.getElementById(
     "miniAvatar"
-  ).textContent = letter;
+  ).textContent =
+    letter;
 
 
   document.getElementById(
     "bigAvatar"
-  ).textContent = letter;
+  ).textContent =
+    letter;
+
+
+  document.getElementById(
+    "rankingAvatar"
+  ).textContent =
+    letter;
+
+
+  document.getElementById(
+    "rankingName"
+  ).textContent =
+    user.name ||
+    "Você";
 
 }
 
@@ -1784,179 +2750,117 @@ function updateProfile(){
 
 function renderRanking(){
 
+  const points =
+    calculatePoints();
+
+
+  document.getElementById(
+    "rankingPoints"
+  ).textContent =
+    points;
+
+
+  document.getElementById(
+    "weekLabel"
+  ).textContent =
+    getWeekLabel();
+
+
+  renderHistory();
+
+}
+
+
+function renderHistory(){
+
   const container =
-    document.getElementById("rankingList");
+    document.getElementById(
+      "historyList"
+    );
 
 
   container.innerHTML = "";
 
 
-  const ranking = [];
-
-
-  /* Amigos */
-
-  user.friends.forEach(function(friend,index){
-
-    ranking.push({
-
-      name:friend.name,
-
-      points:Number(friend.points) || 0,
-
-      isUser:false,
-
-      originalIndex:index
-
-    });
-
-  });
-
-
-  /* Usuário */
-
-  ranking.push({
-
-    name:user.name || "Você",
-
-    points:getPoints(),
-
-    isUser:true,
-
-    originalIndex:-1
-
-  });
-
-
-  ranking.sort(function(a,b){
-
-    return b.points - a.points;
-
-  });
-
-
-  ranking.forEach(function(person,index){
-
-    const item =
-      document.createElement("div");
-
-
-    item.className =
-      "rank" +
-      (person.isUser ? " me" : "");
-
-
-    const avatar =
-      person.name
-        .charAt(0)
-        .toUpperCase();
-
-
-    item.innerHTML = `
-      <div class="rank-position">
-        #${index + 1}
-      </div>
-
-      <div class="rank-avatar">
-        ${escapeHtml(avatar)}
-      </div>
-
-      <div class="rank-info">
-        <strong>${escapeHtml(person.name)}</strong>
-        <span>
-          ${person.isUser ? "Você" : "Amigo"}
-        </span>
-      </div>
-
-      <div class="points">
-        ${person.points} pts
-      </div>
-    `;
-
-
-    container.appendChild(item);
-
-  });
-
-
-  if(ranking.length === 0){
+  if(
+    user.history.length === 0
+  ){
 
     container.innerHTML =
-      '<div class="empty">Nenhum participante ainda.</div>';
-
-  }
-
-}
-
-
-/* ================= AMIGOS ================= */
-
-function openAddFriend(){
-
-  document.getElementById(
-    "friendName"
-  ).value = "";
-
-
-  document.getElementById(
-    "friendPoints"
-  ).value = "0";
-
-
-  openModal("friendModal");
-
-
-  setTimeout(function(){
-
-    document.getElementById(
-      "friendName"
-    ).focus();
-
-  },150);
-
-}
-
-
-function addFriend(){
-
-  const name =
-    document.getElementById("friendName")
-      .value
-      .trim();
-
-
-  const points =
-    Number(
-      document.getElementById("friendPoints")
-        .value
-    ) || 0;
-
-
-  if(!name){
-
-    showToast("Digite o nome do amigo");
+      `
+      <div class="empty">
+        Ainda não existe histórico.<br>
+        Complete treinos durante a semana
+        para criar seu primeiro registro.
+      </div>
+      `;
 
     return;
 
   }
 
 
-  user.friends.push({
+  user.history.forEach(
+    function(item){
 
-    name:name,
+      const element =
+        document.createElement(
+          "div"
+        );
 
-    points:Math.max(0,points)
 
-  });
+      element.className =
+        "history-item";
 
 
-  saveData();
+      const date =
+        new Date(
+          item.week +
+          "T12:00:00"
+        );
 
-  closeModal("friendModal");
 
-  renderRanking();
+      const label =
+        date.toLocaleDateString(
+          "pt-BR",
+          {
+            day:"2-digit",
+            month:"2-digit",
+            year:"numeric"
+          }
+        );
 
-  showToast("Amigo adicionado!");
+
+      element.innerHTML = `
+
+        <div>
+          <strong>
+            Semana de ${label}
+          </strong>
+
+          <span>
+            ${item.exercises}
+            ${
+              item.exercises === 1
+                ? " exercício"
+                : " exercícios"
+            }
+          </span>
+        </div>
+
+        <div class="history-points">
+          ${item.points} pts
+        </div>
+
+      `;
+
+
+      container.appendChild(
+        element
+      );
+
+    }
+  );
 
 }
 
@@ -1993,41 +2897,53 @@ function closeModal(id){
 }
 
 
-/* Fecha clicando fora */
+document
+  .querySelectorAll(".modal-bg")
+  .forEach(
+    function(modal){
 
-document.querySelectorAll(".modal-bg")
-  .forEach(function(modal){
+      modal.addEventListener(
+        "click",
+        function(event){
 
-    modal.addEventListener(
-      "click",
-      function(event){
+          if(
+            event.target === modal
+          ){
 
-        if(event.target === modal){
+            modal.classList.remove(
+              "open"
+            );
 
-          modal.classList.remove("open");
+          }
 
         }
+      );
 
-      }
-    );
+    }
+  );
 
-  });
-
-
-/* ESC fecha modal */
 
 document.addEventListener(
   "keydown",
   function(event){
 
-    if(event.key === "Escape"){
+    if(
+      event.key === "Escape"
+    ){
 
-      document.querySelectorAll(".modal-bg")
-        .forEach(function(modal){
+      document
+        .querySelectorAll(
+          ".modal-bg"
+        )
+        .forEach(
+          function(modal){
 
-          modal.classList.remove("open");
+            modal.classList.remove(
+              "open"
+            );
 
-        });
+          }
+        );
 
     }
 
@@ -2043,23 +2959,36 @@ let toastTimer = null;
 function showToast(message){
 
   const toast =
-    document.getElementById("toast");
+    document.getElementById(
+      "toast"
+    );
 
 
-  toast.textContent = message;
+  toast.textContent =
+    message;
 
-  toast.classList.add("show");
+
+  toast.classList.add(
+    "show"
+  );
 
 
-  clearTimeout(toastTimer);
+  clearTimeout(
+    toastTimer
+  );
 
 
   toastTimer =
-    setTimeout(function(){
+    setTimeout(
+      function(){
 
-      toast.classList.remove("show");
+        toast.classList.remove(
+          "show"
+        );
 
-    },2200);
+      },
+      2200
+    );
 
 }
 
@@ -2070,7 +2999,7 @@ function resetAllData(){
 
   const confirmed =
     confirm(
-      "Tem certeza que deseja apagar seu perfil, progresso, amigos e alterações nos treinos?"
+      "Tem certeza que deseja apagar seu perfil, progresso, histórico e alterações nos treinos?"
     );
 
 
@@ -2081,21 +3010,28 @@ function resetAllData(){
   }
 
 
-  localStorage.removeItem("planfit_data");
+  localStorage.removeItem(
+    "planfit_data"
+  );
 
 
   user = {
 
     name:"",
 
-    completed:{},
-
-    friends:[],
-
     workouts:
       JSON.parse(
-        JSON.stringify(defaultWorkouts)
-      )
+        JSON.stringify(
+          defaultWorkouts
+        )
+      ),
+
+    completed:{},
+
+    history:[],
+
+    currentWeek:
+      getWeekId()
 
   };
 
@@ -2117,15 +3053,14 @@ function resetAllData(){
 
   showPage("home");
 
-  showToast("Dados resetados!");
+  showToast(
+    "Dados resetados!"
+  );
 
 }
 
 
 /* ================= SEGURANÇA ================= */
-
-/* Impede que caracteres digitados pelo usuário
-   sejam interpretados como HTML. */
 
 function escapeHtml(value){
 
@@ -2139,9 +3074,11 @@ function escapeHtml(value){
 }
 
 
-/* ================= ATUALIZAÇÃO GERAL ================= */
+/* ================= ATUALIZAÇÃO ================= */
 
 function updateAll(){
+
+  checkNewWeek();
 
   renderDays();
 
@@ -2155,6 +3092,8 @@ function updateAll(){
 
   renderStats();
 
+  saveData();
+
 }
 
 
@@ -2165,54 +3104,24 @@ loadData();
 updateAll();
 
 
-/* Atalhos de teclado nos modais */
+/* ================= ENTER ================= */
 
-document.getElementById("exerciseName")
-  .addEventListener("keydown",function(event){
+document
+  .getElementById("exerciseName")
+  .addEventListener(
+    "keydown",
+    function(event){
 
-    if(event.key === "Enter"){
+      if(
+        event.key === "Enter"
+      ){
 
-      addExercise();
+        addExercise();
 
-    }
-
-  });
-
-
-document.getElementById("exerciseReps")
-  .addEventListener("keydown",function(event){
-
-    if(event.key === "Enter"){
-
-      addExercise();
+      }
 
     }
-
-  });
-
-
-document.getElementById("friendName")
-  .addEventListener("keydown",function(event){
-
-    if(event.key === "Enter"){
-
-      addFriend();
-
-    }
-
-  });
-
-
-document.getElementById("friendPoints")
-  .addEventListener("keydown",function(event){
-
-    if(event.key === "Enter"){
-
-      addFriend();
-
-    }
-
-  });
+  );
 
 </script>
 
